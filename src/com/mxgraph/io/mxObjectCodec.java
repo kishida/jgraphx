@@ -10,7 +10,6 @@ import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -122,12 +121,12 @@ public class mxObjectCodec {
         }
 
         if (mapping == null) {
-            mapping = new Hashtable<>();
+            mapping = new HashMap<>();
         }
 
         this.mapping = mapping;
 
-        reverse = new Hashtable<>();
+        reverse = new HashMap<>();
         for (Map.Entry<String, String> e : mapping.entrySet()) {
             reverse.put(e.getValue(), e.getKey());
         }
@@ -197,7 +196,7 @@ public class mxObjectCodec {
 
                 if (node != null && node instanceof Element
                         && ((Element) node).hasAttribute("as")) {
-                    obj = new Hashtable<>();
+                    obj = new HashMap<>();
                 }
             }
         } catch (InstantiationException | IllegalAccessException e) {
@@ -627,7 +626,7 @@ public class mxObjectCodec {
             // Adds accessor to cache
             if (method != null) {
                 if (accessors == null) {
-                    accessors = new Hashtable<>();
+                    accessors = new HashMap<>();
                 }
 
                 accessors.put(name, method);

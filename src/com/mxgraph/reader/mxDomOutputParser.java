@@ -1,6 +1,6 @@
 package com.mxgraph.reader;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -47,7 +47,7 @@ public class mxDomOutputParser {
     /**
      *
      */
-    protected transient Map<String, IElementHandler> handlers = new Hashtable<>();
+    protected transient Map<String, IElementHandler> handlers = new HashMap<>();
 
     /**
      *

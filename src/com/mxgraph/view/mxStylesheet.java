@@ -3,7 +3,7 @@
  */
 package com.mxgraph.view;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.mxgraph.util.mxConstants;
@@ -22,12 +22,12 @@ public class mxStylesheet {
     /**
      * Shared immutable empty hashtable (for undefined cell styles).
      */
-    public static final Map<String, Object> EMPTY_STYLE = new Hashtable<>();
+    public static final Map<String, Object> EMPTY_STYLE = new HashMap<>();
 
     /**
      * Maps from names to styles.
      */
-    protected Map<String, Map<String, Object>> styles = new Hashtable<>();
+    protected Map<String, Map<String, Object>> styles = new HashMap<>();
 
     /**
      * Constructs a new stylesheet and assigns default styles.
@@ -59,7 +59,7 @@ public class mxStylesheet {
      * @return Returns the default vertex style.
      */
     protected Map<String, Object> createDefaultVertexStyle() {
-        Map<String, Object> style = new Hashtable<>();
+        Map<String, Object> style = new HashMap<>();
 
         style.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_RECTANGLE);
         style.put(mxConstants.STYLE_PERIMETER, mxPerimeter.RectanglePerimeter);
@@ -78,7 +78,7 @@ public class mxStylesheet {
      * @return Returns the default edge style.
      */
     protected Map<String, Object> createDefaultEdgeStyle() {
-        Map<String, Object> style = new Hashtable<>();
+        Map<String, Object> style = new HashMap<>();
 
         style.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_CONNECTOR);
         style.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC);
@@ -154,9 +154,9 @@ public class mxStylesheet {
             String[] pairs = name.split(";");
 
             if (style != null && !name.startsWith(";")) {
-                style = new Hashtable<>(style);
+                style = new HashMap<>(style);
             } else {
-                style = new Hashtable<>();
+                style = new HashMap<>();
             }
 
             for (String tmp : pairs) {

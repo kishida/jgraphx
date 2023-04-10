@@ -13,8 +13,9 @@ package com.mxgraph.analysis;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
@@ -106,7 +107,7 @@ public class mxGraphAnalysis {
         // with the from element at prio 0.
         mxGraphView view = graph.getView();
         mxFibonacciHeap q = createPriorityQueue();
-        Hashtable<Object, Object> pred = new Hashtable<>();
+        Map<Object, Object> pred = new HashMap<>();
         q.decreaseKey(q.getNode(from, true), 0); // Inserts automatically
 
         // The main loop of the dijkstra algorithm is based on the pqueue being
@@ -207,7 +208,7 @@ public class mxGraphAnalysis {
         // cell in tha graph traversal. The pqueue is initialized
         // with the from element at prio 0.
         mxFibonacciHeap q = createPriorityQueue();
-        Hashtable<Object, Object> pred = new Hashtable<>();
+        Map<Object, Object> pred = new HashMap<>();
         Object u = v[0];
         q.decreaseKey(q.getNode(u, true), 0);
 

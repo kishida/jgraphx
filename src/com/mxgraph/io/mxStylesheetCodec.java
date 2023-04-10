@@ -3,7 +3,7 @@
  */
 package com.mxgraph.io;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -120,9 +120,9 @@ public class mxStylesheetCodec extends mxObjectCodec {
                                 .getStyles().get(extend) : null;
 
                         if (style == null) {
-                            style = new Hashtable<>();
+                            style = new HashMap<>();
                         } else {
-                            style = new Hashtable<>(style);
+                            style = new HashMap<>(style);
                         }
 
                         Node entry = node.getFirstChild();

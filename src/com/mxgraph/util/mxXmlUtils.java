@@ -19,7 +19,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
 import org.xml.sax.InputSource;
 
 /**

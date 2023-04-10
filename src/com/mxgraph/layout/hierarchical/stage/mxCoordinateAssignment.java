@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -300,7 +299,7 @@ public class mxCoordinateAssignment implements mxHierarchicalLayoutStage {
         LinkedList<WeightedCellSorter> nodeList = new LinkedList<>();
 
         // Need to be able to map from cell to cellWrapper
-        Map<mxGraphAbstractHierarchyCell, WeightedCellSorter> map = new Hashtable<>();
+        Map<mxGraphAbstractHierarchyCell, WeightedCellSorter> map = new HashMap<>();
         mxGraphAbstractHierarchyCell[][] rank = new mxGraphAbstractHierarchyCell[model.maxRank + 1][];
 
         for (int i = 0; i <= model.maxRank; i++) {
@@ -478,7 +477,7 @@ public class mxCoordinateAssignment implements mxHierarchicalLayoutStage {
         // , the order is given by the weighted sum of the in or out edges,
         // depending on whether we're travelling up or down the hierarchy.
         WeightedCellSorter[] weightedValues = new WeightedCellSorter[rank.length];
-        Map<mxGraphAbstractHierarchyCell, WeightedCellSorter> cellMap = new Hashtable<>(
+        Map<mxGraphAbstractHierarchyCell, WeightedCellSorter> cellMap = new HashMap<>(
                 rank.length);
 
         for (int i = 0; i < rank.length; i++) {

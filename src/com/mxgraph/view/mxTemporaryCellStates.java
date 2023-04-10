@@ -1,6 +1,7 @@
 package com.mxgraph.view;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.mxgraph.util.mxRectangle;
 
@@ -14,7 +15,7 @@ public class mxTemporaryCellStates {
     /**
      *
      */
-    protected Hashtable<Object, mxCellState> oldStates;
+    protected Map<Object, mxCellState> oldStates;
 
     /**
      *
@@ -52,7 +53,7 @@ public class mxTemporaryCellStates {
         oldScale = view.getScale();
 
         // Creates space for the new states
-        view.setStates(new Hashtable<>());
+        view.setStates(new HashMap<>());
         view.setScale(scale);
 
         if (cells != null) {

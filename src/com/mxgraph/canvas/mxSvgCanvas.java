@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -43,12 +43,12 @@ public class mxSvgCanvas extends mxBasicCanvas {
      * Used internally for looking up elements. Workaround for getElementById
      * not working.
      */
-    private Map<String, Element> gradients = new Hashtable<>();
+    private Map<String, Element> gradients = new HashMap<>();
 
     /**
      * Used internally for looking up images.
      */
-    private Map<String, Element> images = new Hashtable<>();
+    private Map<String, Element> images = new HashMap<>();
 
     /**
      *
@@ -473,7 +473,7 @@ public class mxSvgCanvas extends mxBasicCanvas {
                         * scale);
 
                 // Removes some styles to draw the content area
-                Map<String, Object> cloned = new Hashtable<>(
+                Map<String, Object> cloned = new HashMap<>(
                         style);
                 cloned.remove(mxConstants.STYLE_FILLCOLOR);
                 cloned.remove(mxConstants.STYLE_ROUNDED);

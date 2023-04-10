@@ -3,7 +3,7 @@
  */
 package com.mxgraph.util;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,7 +40,7 @@ public class mxEventObject {
      */
     public mxEventObject(String name, Object... args) {
         this.name = name;
-        properties = new Hashtable<>();
+        properties = new HashMap<>();
 
         if (args != null) {
             for (int i = 0; i < args.length; i += 2) {

@@ -58,7 +58,7 @@ import com.mxgraph.view.mxGraphView;
  * validState.getBoundingBox().getRectangle(); dirty.grow(4, 4); }
  *
  * if (state != null) { lastStyle = state.getStyle(); state.setStyle(new
- * Hashtable<String, Object>(state.getStyle()));
+ * Map<String, Object>(state.getStyle()));
  * state.getStyle().put("strokeColor", "#00ff00");
  * state.getStyle().put("fontColor", "#00ff00");
  * state.getStyle().put("strokeWidth", "3");

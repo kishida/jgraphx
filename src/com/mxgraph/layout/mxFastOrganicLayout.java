@@ -4,8 +4,9 @@
 package com.mxgraph.layout;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
@@ -132,7 +133,7 @@ public class mxFastOrganicLayout extends mxGraphLayout {
     /**
      * Maps from vertices to indices.
      */
-    protected Hashtable<Object, Integer> indices = new Hashtable<>();
+    protected Map<Object, Integer> indices = new HashMap<>();
 
     /**
      * Constructs a new fast organic layout for the specified graph.

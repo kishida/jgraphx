@@ -7,7 +7,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.InputStream;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +35,7 @@ public class mxPngTextDecoder {
      * Decodes the zTXt chunk of the given PNG image stream.
      */
     public static Map<String, String> decodeCompressedText(InputStream stream) {
-        Map<String, String> result = new Hashtable<>();
+        Map<String, String> result = new HashMap<>();
 
         if (!stream.markSupported()) {
             stream = new BufferedInputStream(stream);

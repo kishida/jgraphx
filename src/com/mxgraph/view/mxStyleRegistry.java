@@ -3,7 +3,7 @@
  */
 package com.mxgraph.view;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.mxgraph.util.mxConstants;
@@ -17,7 +17,7 @@ public class mxStyleRegistry {
     /**
      * Maps from strings to objects.
      */
-    protected static Map<String, Object> values = new Hashtable<>();
+    protected static Map<String, Object> values = new HashMap<>();
 
     // Registers the known object styles
     static {

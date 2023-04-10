@@ -6,8 +6,8 @@ package com.mxgraph.layout.hierarchical.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -89,9 +89,9 @@ public class mxGraphHierarchyModel {
         // map of cells to internal cell needed for second run through
         // to setup the sink of edges correctly. Guess size by number
         // of edges is roughly same as number of vertices.
-        vertexMapper = new Hashtable<>(
+        vertexMapper = new HashMap<>(
                 vertices.length);
-        edgeMapper = new Hashtable<>(
+        edgeMapper = new HashMap<>(
                 vertices.length);
 
         maxRank = SOURCESCANSTARTRANK;
@@ -607,7 +607,7 @@ public class mxGraphHierarchyModel {
      */
     public Map<Object, mxGraphHierarchyNode> getVertexMapper() {
         if (vertexMapper == null) {
-            vertexMapper = new Hashtable<>();
+            vertexMapper = new HashMap<>();
         }
         return vertexMapper;
     }

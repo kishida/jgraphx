@@ -4495,7 +4495,7 @@ public class mxGraph extends mxEventSource {
      * and validation context. This implementation returns null.
      *
      * @param cell Cell that represents the cell to validate.
-     * @param context Hashtable that represents the global validation state.
+     * @param context Map that represents the global validation state.
      */
     public String validateCell(Object cell, Map<Object, Object> context) {
         return null;

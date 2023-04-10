@@ -6,7 +6,7 @@ package com.mxgraph.util;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -874,8 +874,8 @@ public class mxCurve {
             corePoints[count++] = point;
         }
 
-        points = new Hashtable<>();
-        curveLengths = new Hashtable<>();
+        points = new HashMap<>();
+        curveLengths = new HashMap<>();
         points.put(CORE_CURVE, corePoints);
         curveLengths.put(CORE_CURVE, lengthSpline);
 
@@ -886,7 +886,7 @@ public class mxCurve {
             coreIntervalsArray[count++] = tempInterval;
         }
 
-        intervals = new Hashtable<>();
+        intervals = new HashMap<>();
         intervals.put(CORE_CURVE, coreIntervalsArray);
 
         valid = true;
@@ -1105,7 +1105,7 @@ public class mxCurve {
 
         if (pointsChanged) {
             guidePoints = new ArrayList<>(newPoints);
-            points = new Hashtable<>();
+            points = new HashMap<>();
             valid = false;
         }
     }

@@ -3,7 +3,7 @@
  */
 package com.mxgraph.analysis;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,7 +21,7 @@ public class mxUnionFind {
     /**
      * Maps from elements to nodes
      */
-    protected Map<Object, Node> nodes = new Hashtable<>();
+    protected Map<Object, Node> nodes = new HashMap<>();
 
     /**
      * Constructs a union find structure and initializes it with the specified

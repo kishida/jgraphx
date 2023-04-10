@@ -5,7 +5,7 @@ package com.mxgraph.view;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,7 +94,7 @@ public class mxGraphView extends mxEventSource {
     /**
      * Maps from cells to cell states.
      */
-    protected Hashtable<Object, mxCellState> states = new Hashtable<>();
+    protected Map<Object, mxCellState> states = new HashMap<>();
 
     /**
      * Constructs a new view for the given graph.
@@ -117,14 +117,14 @@ public class mxGraphView extends mxEventSource {
     /**
      * Returns the dictionary that maps from cells to states.
      */
-    public Hashtable<Object, mxCellState> getStates() {
+    public Map<Object, mxCellState> getStates() {
         return states;
     }
 
     /**
      * Returns the dictionary that maps from cells to states.
      */
-    public void setStates(Hashtable<Object, mxCellState> states) {
+    public void setStates(Map<Object, mxCellState> states) {
         this.states = states;
     }
 

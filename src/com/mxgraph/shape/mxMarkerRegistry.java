@@ -4,7 +4,7 @@ import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.mxgraph.canvas.mxGraphics2DCanvas;
@@ -18,7 +18,7 @@ public class mxMarkerRegistry {
     /**
      *
      */
-    protected static Map<String, mxIMarker> markers = new Hashtable<>();
+    protected static Map<String, mxIMarker> markers = new HashMap<>();
 
     static {
         mxIMarker tmp = (mxGraphics2DCanvas canvas, mxCellState state, String type, mxPoint pe, double nx, double ny, double size, boolean source) -> {

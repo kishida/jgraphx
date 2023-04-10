@@ -3,7 +3,7 @@
  */
 package com.mxgraph.io;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +34,7 @@ public class mxCodec {
     /**
      * Maps from IDs to objects.
      */
-    protected Map<String, Object> objects = new Hashtable<>();
+    protected Map<String, Object> objects = new HashMap<>();
 
     /**
      * Maps from IDs to elements.
@@ -167,7 +167,7 @@ public class mxCodec {
      */
     public Node getElementById(String id) {
         if (elements == null) {
-            elements = new Hashtable<>();
+            elements = new HashMap<>();
             addElement(document.getDocumentElement());
         }
 

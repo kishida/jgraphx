@@ -3,7 +3,25 @@
  */
 package com.mxgraph.shape;
 
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.mxgraph.canvas.mxGraphics2DCanvas;
 import com.mxgraph.util.mxUtils;
@@ -14,24 +32,6 @@ import com.mxgraph.util.svg.AWTPolylineProducer;
 import com.mxgraph.util.svg.CSSConstants;
 import com.mxgraph.util.svg.ExtendedGeneralPath;
 import com.mxgraph.view.mxCellState;
-import java.awt.Color;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * Stencil shape drawing that takes an XML definition of the shape and renders
@@ -637,7 +637,7 @@ public class mxStencilShape extends mxBasicShape {
      */
     protected static Map<String, Object> getStylenames(String style) {
         if (style != null && style.length() > 0) {
-            Map<String, Object> result = new Hashtable<>();
+            Map<String, Object> result = new HashMap<>();
 
             if (style != null) {
                 String[] pairs = style.split(";");

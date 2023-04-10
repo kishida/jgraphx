@@ -4,7 +4,7 @@
 package com.mxgraph.reader;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +77,7 @@ public abstract class mxGraphViewReader extends DefaultHandler {
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         String tagName = qName.toUpperCase();
-        Map<String, Object> attrs = new Hashtable<>();
+        Map<String, Object> attrs = new HashMap<>();
 
         for (int i = 0; i < atts.getLength(); i++) {
             String name = atts.getQName(i);

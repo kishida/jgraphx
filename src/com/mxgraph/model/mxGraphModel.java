@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -287,7 +287,7 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
      */
     @Override
     public Object[] cloneCells(Object[] cells, boolean includeChildren) {
-        Map<Object, Object> mapping = new Hashtable<>();
+        Map<Object, Object> mapping = new HashMap<>();
         Object[] clones = new Object[cells.length];
 
         for (int i = 0; i < cells.length; i++) {
@@ -440,7 +440,7 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
                     }
 
                     if (cells == null) {
-                        cells = new Hashtable<>();
+                        cells = new HashMap<>();
                     }
 
                     cells.put(mxc.getId(), cell);
@@ -1026,7 +1026,7 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
             throws CloneNotSupportedException {
         beginUpdate();
         try {
-            Hashtable<Object, Object> mapping = new Hashtable<>();
+            Map<Object, Object> mapping = new HashMap<>();
             mergeChildrenImpl(from, to, cloneAllEdges, mapping);
             // Post-processes all edges in the mapping and
             // reconnects the terminals to the corresponding
@@ -1060,7 +1060,7 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
      * inserted into this model.
      */
     protected void mergeChildrenImpl(mxICell from, mxICell to,
-            boolean cloneAllEdges, Hashtable<Object, Object> mapping)
+            boolean cloneAllEdges, Map<Object, Object> mapping)
             throws CloneNotSupportedException {
         beginUpdate();
         try {

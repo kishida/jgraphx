@@ -8,8 +8,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -402,7 +402,7 @@ public class mxOrganicLayout extends mxGraphLayout {
         mxRectangle bounds = null;
 
         // Form internal model of nodes
-        Map<Object, Integer> vertexMap = new Hashtable<>();
+        Map<Object, Integer> vertexMap = new HashMap<>();
         v = new CellWrapper[vertices.length];
         for (int i = 0; i < vertices.length; i++) {
             v[i] = new CellWrapper(vertices[i]);

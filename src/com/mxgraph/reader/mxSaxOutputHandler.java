@@ -1,6 +1,6 @@
 package com.mxgraph.reader;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.xml.sax.Attributes;
@@ -25,7 +25,7 @@ public class mxSaxOutputHandler extends DefaultHandler {
     /**
      *
      */
-    protected transient Map<String, IElementHandler> handlers = new Hashtable<>();
+    protected transient Map<String, IElementHandler> handlers = new HashMap<>();
 
     /**
      *

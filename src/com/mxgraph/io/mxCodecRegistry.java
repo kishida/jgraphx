@@ -5,7 +5,7 @@ package com.mxgraph.io;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -28,12 +28,12 @@ public class mxCodecRegistry {
     /**
      * Maps from constructor names to codecs.
      */
-    protected static Hashtable<String, mxObjectCodec> codecs = new Hashtable<>();
+    protected static Map<String, mxObjectCodec> codecs = new HashMap<>();
 
     /**
      * Maps from classnames to codecnames.
      */
-    protected static Hashtable<String, String> aliases = new Hashtable<>();
+    protected static Map<String, String> aliases = new HashMap<>();
 
     /**
      * Holds the list of known packages. Packages are used to prefix short class

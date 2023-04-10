@@ -4,7 +4,7 @@
 package com.mxgraph.canvas;
 
 import java.awt.Rectangle;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -170,7 +170,7 @@ public class mxVmlCanvas extends mxBasicCanvas {
                         * scale);
 
                 // Removes some styles to draw the content area
-                Map<String, Object> cloned = new Hashtable<>(
+                Map<String, Object> cloned = new HashMap<>(
                         style);
                 cloned.remove(mxConstants.STYLE_FILLCOLOR);
                 cloned.remove(mxConstants.STYLE_ROUNDED);

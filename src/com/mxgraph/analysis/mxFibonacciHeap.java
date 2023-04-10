@@ -4,7 +4,7 @@
  */
 package com.mxgraph.analysis;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,7 +15,7 @@ public class mxFibonacciHeap {
     /**
      * Maps from elements to nodes
      */
-    protected Map<Object, Node> nodes = new Hashtable<>();
+    protected Map<Object, Node> nodes = new HashMap<>();
 
     /**
      *

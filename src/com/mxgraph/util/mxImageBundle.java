@@ -3,7 +3,7 @@
  */
 package com.mxgraph.util;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -46,7 +46,7 @@ public class mxImageBundle {
     /**
      * Maps from keys to images.
      */
-    protected Map<String, String> images = new Hashtable<>();
+    protected Map<String, String> images = new HashMap<>();
 
     /**
      * Returns the images.

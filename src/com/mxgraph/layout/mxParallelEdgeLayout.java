@@ -2,7 +2,7 @@ package com.mxgraph.layout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +63,7 @@ public class mxParallelEdgeLayout extends mxGraphLayout {
      *
      */
     protected Map<String, List<Object>> findParallels(Object parent) {
-        Map<String, List<Object>> lookup = new Hashtable<>();
+        Map<String, List<Object>> lookup = new HashMap<>();
         mxIGraphModel model = graph.getModel();
         int childCount = model.getChildCount(parent);
 

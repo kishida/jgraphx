@@ -3,7 +3,7 @@
  */
 package com.mxgraph.canvas;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,8 +102,7 @@ public class mxHtmlCanvas extends mxBasicCanvas {
                         * scale);
 
                 // Removes some styles to draw the content area
-                Map<String, Object> cloned = new Hashtable<>(
-                        style);
+                Map<String, Object> cloned = new HashMap<>(style);
                 cloned.remove(mxConstants.STYLE_FILLCOLOR);
                 cloned.remove(mxConstants.STYLE_ROUNDED);
 

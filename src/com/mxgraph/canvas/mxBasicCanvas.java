@@ -1,7 +1,7 @@
 package com.mxgraph.canvas;
 
 import java.awt.image.BufferedImage;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.mxgraph.util.mxConstants;
@@ -46,7 +46,7 @@ public abstract class mxBasicCanvas implements mxICanvas {
     /**
      * Cache for images.
      */
-    protected Hashtable<String, BufferedImage> imageCache = new Hashtable<>();
+    protected Map<String, BufferedImage> imageCache = new HashMap<>();
 
     /**
      * Sets the current translate.
