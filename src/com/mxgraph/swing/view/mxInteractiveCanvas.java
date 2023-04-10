@@ -18,179 +18,156 @@ import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
 
-public class mxInteractiveCanvas extends mxGraphics2DCanvas
-{
-	/**
-	 * 
-	 */
-	protected ImageObserver imageObserver = null;
+public class mxInteractiveCanvas extends mxGraphics2DCanvas {
 
-	/**
-	 * 
-	 */
-	public mxInteractiveCanvas()
-	{
-		this(null);
-	}
+    /**
+     *
+     */
+    protected ImageObserver imageObserver = null;
 
-	/**
-	 * 
-	 */
-	public mxInteractiveCanvas(ImageObserver imageObserver)
-	{
-		setImageObserver(imageObserver);
-	}
+    /**
+     *
+     */
+    public mxInteractiveCanvas() {
+        this(null);
+    }
 
-	/**
-	 * 
-	 */
-	public void setImageObserver(ImageObserver value)
-	{
-		imageObserver = value;
-	}
+    /**
+     *
+     */
+    public mxInteractiveCanvas(ImageObserver imageObserver) {
+        setImageObserver(imageObserver);
+    }
 
-	/**
-	 * 
-	 */
-	public ImageObserver getImageObserver()
-	{
-		return imageObserver;
-	}
+    /**
+     *
+     */
+    public void setImageObserver(ImageObserver value) {
+        imageObserver = value;
+    }
 
-	/**
-	 * Overrides graphics call to use image observer.
-	 */
-	protected void drawImageImpl(Image image, int x, int y)
-	{
-		g.drawImage(image, x, y, imageObserver);
-	}
+    /**
+     *
+     */
+    public ImageObserver getImageObserver() {
+        return imageObserver;
+    }
 
-	/**
-	 * Returns the size for the given image.
-	 */
-	protected Dimension getImageSize(Image image)
-	{
-		return new Dimension(image.getWidth(imageObserver),
-				image.getHeight(imageObserver));
-	}
+    /**
+     * Overrides graphics call to use image observer.
+     */
+    @Override
+    protected void drawImageImpl(Image image, int x, int y) {
+        g.drawImage(image, x, y, imageObserver);
+    }
 
-	/**
-	 * 
-	 */
-	public boolean contains(mxGraphComponent graphComponent, Rectangle rect,
-			mxCellState state)
-	{
-		return state != null && state.getX() >= rect.x
-				&& state.getY() >= rect.y
-				&& state.getX() + state.getWidth() <= rect.x + rect.width
-				&& state.getY() + state.getHeight() <= rect.y + rect.height;
-	}
+    /**
+     * Returns the size for the given image.
+     */
+    @Override
+    protected Dimension getImageSize(Image image) {
+        return new Dimension(image.getWidth(imageObserver),
+                image.getHeight(imageObserver));
+    }
 
-	/**
-	 * 
-	 */
-	public boolean intersects(mxGraphComponent graphComponent, Rectangle rect,
-			mxCellState state)
-	{
-		if (state != null)
-		{
-			// Checks if the label intersects
-			if (state.getLabelBounds() != null
-					&& state.getLabelBounds().getRectangle().intersects(rect))
-			{
-				return true;
-			}
+    /**
+     *
+     */
+    public boolean contains(mxGraphComponent graphComponent, Rectangle rect,
+            mxCellState state) {
+        return state != null && state.getX() >= rect.x
+                && state.getY() >= rect.y
+                && state.getX() + state.getWidth() <= rect.x + rect.width
+                && state.getY() + state.getHeight() <= rect.y + rect.height;
+    }
 
-			int pointCount = state.getAbsolutePointCount();
+    /**
+     *
+     */
+    public boolean intersects(mxGraphComponent graphComponent, Rectangle rect,
+            mxCellState state) {
+        if (state != null) {
+            // Checks if the label intersects
+            if (state.getLabelBounds() != null
+                    && state.getLabelBounds().getRectangle().intersects(rect)) {
+                return true;
+            }
 
-			// Checks if the segments of the edge intersect
-			if (pointCount > 0)
-			{
-				rect = (Rectangle) rect.clone();
-				int tolerance = graphComponent.getTolerance();
-				rect.grow(tolerance, tolerance);
+            int pointCount = state.getAbsolutePointCount();
 
-				Shape realShape = null;
+            // Checks if the segments of the edge intersect
+            if (pointCount > 0) {
+                rect = (Rectangle) rect.clone();
+                int tolerance = graphComponent.getTolerance();
+                rect.grow(tolerance, tolerance);
 
-				// FIXME: Check if this should be used for all shapes
-				if (mxUtils.getString(state.getStyle(),
-						mxConstants.STYLE_SHAPE, "").equals(
-						mxConstants.SHAPE_ARROW))
-				{
-					mxIShape shape = getShape(state.getStyle());
+                Shape realShape = null;
 
-					if (shape instanceof mxBasicShape)
-					{
-						realShape = ((mxBasicShape) shape).createShape(this,
-								state);
-					}
-				}
+                // FIXME: Check if this should be used for all shapes
+                if (mxUtils.getString(state.getStyle(),
+                        mxConstants.STYLE_SHAPE, "").equals(
+                                mxConstants.SHAPE_ARROW)) {
+                    mxIShape shape = getShape(state.getStyle());
 
-				if (realShape != null && realShape.intersects(rect))
-				{
-					return true;
-				}
-				else
-				{
-					mxPoint p0 = state.getAbsolutePoint(0);
+                    if (shape instanceof mxBasicShape basicShape) {
+                        realShape = basicShape.createShape(this,
+                                state);
+                    }
+                }
 
-					for (int i = 0; i < pointCount; i++)
-					{
-						mxPoint p1 = state.getAbsolutePoint(i);
+                if (realShape != null && realShape.intersects(rect)) {
+                    return true;
+                } else {
+                    mxPoint p0 = state.getAbsolutePoint(0);
 
-						if (rect.intersectsLine(p0.getX(), p0.getY(),
-								p1.getX(), p1.getY()))
-						{
-							return true;
-						}
+                    for (int i = 0; i < pointCount; i++) {
+                        mxPoint p1 = state.getAbsolutePoint(i);
 
-						p0 = p1;
-					}
-				}
-			}
-			else
-			{
-				// Checks if the bounds of the shape intersect
-				return state.getRectangle().intersects(rect);
-			}
-		}
+                        if (rect.intersectsLine(p0.getX(), p0.getY(),
+                                p1.getX(), p1.getY())) {
+                            return true;
+                        }
 
-		return false;
-	}
+                        p0 = p1;
+                    }
+                }
+            } else {
+                // Checks if the bounds of the shape intersect
+                return state.getRectangle().intersects(rect);
+            }
+        }
 
-	/**
-	 * Returns true if the given point is inside the content area of the given
-	 * swimlane. (The content area of swimlanes is transparent to events.) This
-	 * implementation does not check if the given state is a swimlane, it is
-	 * assumed that the caller has checked this before using this method.
-	 */
-	public boolean hitSwimlaneContent(mxGraphComponent graphComponent,
-			mxCellState swimlane, int x, int y)
-	{
-		if (swimlane != null)
-		{
-			int start = (int) Math.max(2, Math.round(mxUtils.getInt(
-					swimlane.getStyle(), mxConstants.STYLE_STARTSIZE,
-					mxConstants.DEFAULT_STARTSIZE)
-					* graphComponent.getGraph().getView().getScale()));
-			Rectangle rect = swimlane.getRectangle();
+        return false;
+    }
 
-			if (mxUtils.isTrue(swimlane.getStyle(),
-					mxConstants.STYLE_HORIZONTAL, true))
-			{
-				rect.y += start;
-				rect.height -= start;
-			}
-			else
-			{
-				rect.x += start;
-				rect.width -= start;
-			}
+    /**
+     * Returns true if the given point is inside the content area of the given
+     * swimlane. (The content area of swimlanes is transparent to events.) This
+     * implementation does not check if the given state is a swimlane, it is
+     * assumed that the caller has checked this before using this method.
+     */
+    public boolean hitSwimlaneContent(mxGraphComponent graphComponent,
+            mxCellState swimlane, int x, int y) {
+        if (swimlane != null) {
+            int start = (int) Math.max(2, Math.round(mxUtils.getInt(
+                    swimlane.getStyle(), mxConstants.STYLE_STARTSIZE,
+                    mxConstants.DEFAULT_STARTSIZE)
+                    * graphComponent.getGraph().getView().getScale()));
+            Rectangle rect = swimlane.getRectangle();
 
-			return rect.contains(x, y);
-		}
+            if (mxUtils.isTrue(swimlane.getStyle(),
+                    mxConstants.STYLE_HORIZONTAL, true)) {
+                rect.y += start;
+                rect.height -= start;
+            } else {
+                rect.x += start;
+                rect.width -= start;
+            }
 
-		return false;
-	}
+            return rect.contains(x, y);
+        }
+
+        return false;
+    }
 
 }

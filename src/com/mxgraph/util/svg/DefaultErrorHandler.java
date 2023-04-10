@@ -23,16 +23,14 @@ package com.mxgraph.util.svg;
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  */
+public class DefaultErrorHandler implements ErrorHandler {
 
-public class DefaultErrorHandler implements ErrorHandler
-{
-
-	/**
-	 * Implements {@link ErrorHandler#error(ParseException)}.
-	 * Throws the given exception.
-	 */
-	public void error(ParseException e) throws ParseException
-	{
-		throw e;
-	}
+    /**
+     * Implements {@link ErrorHandler#error(ParseException)}. Throws the given
+     * exception.
+     */
+    @Override
+    public void error(ParseException e) throws ParseException {
+        throw e;
+    }
 }

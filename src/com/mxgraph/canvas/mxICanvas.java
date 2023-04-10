@@ -7,49 +7,49 @@ import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxCellState;
 
 /**
- * Defines the requirements for a canvas that paints the vertices and edges of
- * a graph.
+ * Defines the requirements for a canvas that paints the vertices and edges of a
+ * graph.
  */
-public interface mxICanvas
-{
-	/**
-	 * Sets the translation for the following drawing requests.
-	 */
-	void setTranslate(double x, double y);
+public interface mxICanvas {
 
-	/**
-	 * Returns the current translation.
-	 * 
-	 * @return Returns the current translation.
-	 */
-	mxPoint getTranslate();
+    /**
+     * Sets the translation for the following drawing requests.
+     */
+    void setTranslate(double x, double y);
 
-	/**
-	 * Sets the scale for the following drawing requests.
-	 */
-	void setScale(double scale);
+    /**
+     * Returns the current translation.
+     *
+     * @return Returns the current translation.
+     */
+    mxPoint getTranslate();
 
-	/**
-	 * Returns the scale.
-	 */
-	double getScale();
+    /**
+     * Sets the scale for the following drawing requests.
+     */
+    void setScale(double scale);
 
-	/**
-	 * Draws the given cell.
-	 * 
-	 * @param state State of the cell to be painted.
-	 * @return Object that represents the cell.
-	 */
-	Object drawCell(mxCellState state);
+    /**
+     * Returns the scale.
+     */
+    double getScale();
 
-	/**
-	 * Draws the given label.
-	 * 
-	 * @param text String that represents the label.
-	 * @param state State of the cell whose label is to be painted.
-	 * @param html Specifies if the label contains HTML markup.
-	 * @return Object that represents the label.
-	 */
-	Object drawLabel(String text, mxCellState state, boolean html);
+    /**
+     * Draws the given cell.
+     *
+     * @param state State of the cell to be painted.
+     * @return Object that represents the cell.
+     */
+    Object drawCell(mxCellState state);
+
+    /**
+     * Draws the given label.
+     *
+     * @param text String that represents the label.
+     * @param state State of the cell whose label is to be painted.
+     * @param html Specifies if the label contains HTML markup.
+     * @return Object that represents the label.
+     */
+    Object drawLabel(String text, mxCellState state, boolean html);
 
 }

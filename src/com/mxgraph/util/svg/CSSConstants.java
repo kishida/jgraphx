@@ -19,17 +19,17 @@
 package com.mxgraph.util.svg;
 
 /**
- * This interface defines constants for CSS.
- * Important: Constants must not contain uppercase characters.
+ * This interface defines constants for CSS. Important: Constants must not
+ * contain uppercase characters.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  */
 public interface CSSConstants {
 
-	String CSS_STROKE_PROPERTY = "stroke";
-	
+    String CSS_STROKE_PROPERTY = "stroke";
+
     String CSS_FILL_PROPERTY = "fill";
-	
-	String CSS_NONE_VALUE = "none";
+
+    String CSS_NONE_VALUE = "none";
 
 }

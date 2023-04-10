@@ -17,364 +17,327 @@ import com.mxgraph.swing.util.mxMouseAdapter;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
 
 /**
- * Basic example of implementing a handler for rotation. This can be used as follows:
- * 
+ * Basic example of implementing a handler for rotation. This can be used as
+ * follows:
+ *
  * new mxRotationHandler(graphComponent)
- * 
- * Note that the Java core does actually not support rotation for the selection handles,
- * perimeter points etc. Feel free to contribute a fix!
+ *
+ * Note that the Java core does actually not support rotation for the selection
+ * handles, perimeter points etc. Feel free to contribute a fix!
  */
-public class mxRotationHandler extends mxMouseAdapter
-{
-	/**
-	 * 
-	 */
-	public static ImageIcon ROTATE_ICON = null;
+public class mxRotationHandler extends mxMouseAdapter {
 
-	/**
-	 * Loads the collapse and expand icons.
-	 */
-	static
-	{
-		ROTATE_ICON = new ImageIcon(
-				mxRotationHandler.class
-						.getResource("/com/mxgraph/swing/images/rotate.gif"));
-	}
+    /**
+     *
+     */
+    public static ImageIcon ROTATE_ICON = null;
 
-	/**
-	 * 
-	 */
-	private static double PI4 = Math.PI / 4;
+    /**
+     * Loads the collapse and expand icons.
+     */
+    static {
+        ROTATE_ICON = new ImageIcon(
+                mxRotationHandler.class
+                        .getResource("/com/mxgraph/swing/images/rotate.gif"));
+    }
 
-	/**
-	 * Reference to the enclosing graph component.
-	 */
-	protected mxGraphComponent graphComponent;
+    /**
+     *
+     */
+    private static double PI4 = Math.PI / 4;
 
-	/**
-	 * Specifies if this handler is enabled. Default is true.
-	 */
-	protected boolean enabled = true;
+    /**
+     * Reference to the enclosing graph component.
+     */
+    protected mxGraphComponent graphComponent;
 
-	/**
-	 * 
-	 */
-	protected JComponent handle;
+    /**
+     * Specifies if this handler is enabled. Default is true.
+     */
+    protected boolean enabled = true;
 
-	/**
-	 * 
-	 */
-	protected mxCellState currentState;
+    /**
+     *
+     */
+    protected JComponent handle;
 
-	/**
-	 * 
-	 */
-	protected double initialAngle;
+    /**
+     *
+     */
+    protected mxCellState currentState;
 
-	/**
-	 * 
-	 */
-	protected double currentAngle;
+    /**
+     *
+     */
+    protected double initialAngle;
 
-	/**
-	 * 
-	 */
-	protected Point first;
+    /**
+     *
+     */
+    protected double currentAngle;
 
-	/**
-	 * Constructs a new rotation handler.
-	 */
-	public mxRotationHandler(mxGraphComponent graphComponent)
-	{
-		this.graphComponent = graphComponent;
-		graphComponent.addMouseListener(this);
-		handle = createHandle();
+    /**
+     *
+     */
+    protected Point first;
 
-		// Installs the paint handler
-		graphComponent.addListener(mxEvent.AFTER_PAINT, new mxIEventListener()
-		{
-			public void invoke(Object sender, mxEventObject evt)
-			{
-				Graphics g = (Graphics) evt.getProperty("g");
-				paint(g);
-			}
-		});
+    /**
+     * Constructs a new rotation handler.
+     */
+    public mxRotationHandler(mxGraphComponent graphComponent) {
+        this.graphComponent = graphComponent;
+        graphComponent.addMouseListener(this);
+        handle = createHandle();
 
-		// Listens to all mouse events on the rendering control
-		graphComponent.getGraphControl().addMouseListener(this);
-		graphComponent.getGraphControl().addMouseMotionListener(this);
+        // Installs the paint handler
+        graphComponent.addListener(mxEvent.AFTER_PAINT, (Object sender, mxEventObject evt) -> {
+            Graphics g = (Graphics) evt.getProperty("g");
+            paint(g);
+        });
 
-		// Needs to catch events because these are consumed
-		handle.addMouseListener(this);
-		handle.addMouseMotionListener(this);
-	}
+        // Listens to all mouse events on the rendering control
+        graphComponent.getGraphControl().addMouseListener(this);
+        graphComponent.getGraphControl().addMouseMotionListener(this);
 
-	/**
-	 * 
-	 */
-	public mxGraphComponent getGraphComponent()
-	{
-		return graphComponent;
-	}
+        // Needs to catch events because these are consumed
+        handle.addMouseListener(this);
+        handle.addMouseMotionListener(this);
+    }
 
-	/**
-	 * 
-	 */
-	public boolean isEnabled()
-	{
-		return enabled;
-	}
+    /**
+     *
+     */
+    public mxGraphComponent getGraphComponent() {
+        return graphComponent;
+    }
 
-	/**
-	 * 
-	 */
-	public void setEnabled(boolean value)
-	{
-		enabled = value;
-	}
+    /**
+     *
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	/**
-	 * 
-	 */
-	protected JComponent createHandle()
-	{
-		JLabel label = new JLabel(ROTATE_ICON);
-		label.setSize(ROTATE_ICON.getIconWidth(), ROTATE_ICON.getIconHeight());
-		label.setOpaque(false);
+    /**
+     *
+     */
+    public void setEnabled(boolean value) {
+        enabled = value;
+    }
 
-		return label;
-	}
+    /**
+     *
+     */
+    protected JComponent createHandle() {
+        JLabel label = new JLabel(ROTATE_ICON);
+        label.setSize(ROTATE_ICON.getIconWidth(), ROTATE_ICON.getIconHeight());
+        label.setOpaque(false);
 
-	/**
-	 * 
-	 */
-	public boolean isStateHandled(mxCellState state)
-	{
-		return graphComponent.getGraph().getModel().isVertex(state.getCell());
-	}
+        return label;
+    }
 
-	/**
-	 * 
-	 */
-	public void mousePressed(MouseEvent e)
-	{
-		if (currentState != null && handle.getParent() != null
-				&& e.getSource() == handle /* mouse hits handle */)
-		{
-			start(e);
-			e.consume();
-		}
-	}
+    /**
+     *
+     */
+    public boolean isStateHandled(mxCellState state) {
+        return graphComponent.getGraph().getModel().isVertex(state.getCell());
+    }
 
-	/**
-	 * 
-	 */
-	public void start(MouseEvent e)
-	{
-		initialAngle = mxUtils.getDouble(currentState.getStyle(),
-				mxConstants.STYLE_ROTATION) * mxConstants.RAD_PER_DEG;
-		currentAngle = initialAngle;
-		first = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(),
-				graphComponent.getGraphControl());
+    /**
+     *
+     */
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (currentState != null && handle.getParent() != null
+                && e.getSource() == handle /* mouse hits handle */) {
+            start(e);
+            e.consume();
+        }
+    }
 
-		if (!graphComponent.getGraph().isCellSelected(currentState.getCell()))
-		{
-			graphComponent.selectCellForEvent(currentState.getCell(), e);
-		}
-	}
+    /**
+     *
+     */
+    public void start(MouseEvent e) {
+        initialAngle = mxUtils.getDouble(currentState.getStyle(),
+                mxConstants.STYLE_ROTATION) * mxConstants.RAD_PER_DEG;
+        currentAngle = initialAngle;
+        first = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(),
+                graphComponent.getGraphControl());
 
-	/**
-	 * 
-	 */
-	public void mouseMoved(MouseEvent e)
-	{
-		if (graphComponent.isEnabled() && isEnabled())
-		{
-			if (handle.getParent() != null && e.getSource() == handle /* mouse hits handle */)
-			{
-				graphComponent.getGraphControl().setCursor(
-						new Cursor(Cursor.HAND_CURSOR));
-				e.consume();
-			}
-			else if (currentState == null
-					|| !currentState.getRectangle().contains(e.getPoint()))
-			{
-				mxCellState eventState = graphComponent
-						.getGraph()
-						.getView()
-						.getState(
-								graphComponent.getCellAt(e.getX(), e.getY(),
-										false));
+        if (!graphComponent.getGraph().isCellSelected(currentState.getCell())) {
+            graphComponent.selectCellForEvent(currentState.getCell(), e);
+        }
+    }
 
-				mxCellState state = null;
+    /**
+     *
+     */
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        if (graphComponent.isEnabled() && isEnabled()) {
+            if (handle.getParent() != null && e.getSource() == handle /* mouse hits handle */) {
+                graphComponent.getGraphControl().setCursor(
+                        new Cursor(Cursor.HAND_CURSOR));
+                e.consume();
+            } else if (currentState == null
+                    || !currentState.getRectangle().contains(e.getPoint())) {
+                mxCellState eventState = graphComponent
+                        .getGraph()
+                        .getView()
+                        .getState(
+                                graphComponent.getCellAt(e.getX(), e.getY(),
+                                        false));
 
-				if (eventState != null && isStateHandled(eventState))
-				{
-					state = eventState;
-				}
+                mxCellState state = null;
 
-				if (currentState != state)
-				{
-					currentState = state;
+                if (eventState != null && isStateHandled(eventState)) {
+                    state = eventState;
+                }
 
-					if (currentState == null && handle.getParent() != null)
-					{
-						handle.setVisible(false);
-						handle.getParent().remove(handle);
-					}
-					else if (currentState != null)
-					{
-						if (handle.getParent() == null)
-						{
-							// Adds component for rendering the handles (preview is separate)
-							graphComponent.getGraphControl().add(handle, 0);
-							handle.setVisible(true);
-						}
+                if (currentState != state) {
+                    currentState = state;
 
-						handle.setLocation(
-								(int) (currentState.getX()
-										+ currentState.getWidth()
-										- handle.getWidth() - 4),
-								(int) (currentState.getY()
-										+ currentState.getHeight()
-										- handle.getWidth() - 4));
-					}
-				}
-			}
-		}
-	}
+                    if (currentState == null && handle.getParent() != null) {
+                        handle.setVisible(false);
+                        handle.getParent().remove(handle);
+                    } else if (currentState != null) {
+                        if (handle.getParent() == null) {
+                            // Adds component for rendering the handles (preview is separate)
+                            graphComponent.getGraphControl().add(handle, 0);
+                            handle.setVisible(true);
+                        }
 
-	/**
-	 * 
-	 */
-	public void mouseDragged(MouseEvent e)
-	{
-		if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
-				&& first != null)
-		{
-			mxRectangle dirty = mxUtils.getBoundingBox(currentState,
-					currentAngle * mxConstants.DEG_PER_RAD);
-			Point pt = SwingUtilities.convertPoint(e.getComponent(),
-					e.getPoint(), graphComponent.getGraphControl());
+                        handle.setLocation(
+                                (int) (currentState.getX()
+                                + currentState.getWidth()
+                                - handle.getWidth() - 4),
+                                (int) (currentState.getY()
+                                + currentState.getHeight()
+                                - handle.getWidth() - 4));
+                    }
+                }
+            }
+        }
+    }
 
-			double cx = currentState.getCenterX();
-			double cy = currentState.getCenterY();
-			double dx = pt.getX() - cx;
-			double dy = pt.getY() - cy;
-			double c = Math.sqrt(dx * dx + dy * dy);
+    /**
+     *
+     */
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
+                && first != null) {
+            mxRectangle dirty = mxUtils.getBoundingBox(currentState,
+                    currentAngle * mxConstants.DEG_PER_RAD);
+            Point pt = SwingUtilities.convertPoint(e.getComponent(),
+                    e.getPoint(), graphComponent.getGraphControl());
 
-			currentAngle = ((pt.getX() > cx) ? -1 : 1) * Math.acos(dy / c)
-					+ PI4 + initialAngle;
+            double cx = currentState.getCenterX();
+            double cy = currentState.getCenterY();
+            double dx = pt.getX() - cx;
+            double dy = pt.getY() - cy;
+            double c = Math.sqrt(dx * dx + dy * dy);
 
-			dirty.add(mxUtils.getBoundingBox(currentState, currentAngle
-					* mxConstants.DEG_PER_RAD));
-			dirty.grow(1);
+            currentAngle = ((pt.getX() > cx) ? -1 : 1) * Math.acos(dy / c)
+                    + PI4 + initialAngle;
 
-			// TODO: Compute dirty rectangle and repaint
-			graphComponent.getGraphControl().repaint(dirty.getRectangle());
-			e.consume();
-		}
-		else if (handle.getParent() != null)
-		{
-			handle.getParent().remove(handle);
-		}
-	}
+            dirty.add(mxUtils.getBoundingBox(currentState, currentAngle
+                    * mxConstants.DEG_PER_RAD));
+            dirty.grow(1);
 
-	/**
-	 * 
-	 */
-	public void mouseReleased(MouseEvent e)
-	{
-		if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
-				&& first != null)
-		{
-			double deg = 0;
-			Object cell = null;
+            // TODO: Compute dirty rectangle and repaint
+            graphComponent.getGraphControl().repaint(dirty.getRectangle());
+            e.consume();
+        } else if (handle.getParent() != null) {
+            handle.getParent().remove(handle);
+        }
+    }
 
-			if (currentState != null)
-			{
-				cell = currentState.getCell();
-				/*deg = mxUtils.getDouble(currentState.getStyle(),
+    /**
+     *
+     */
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
+                && first != null) {
+            double deg = 0;
+            Object cell = null;
+
+            if (currentState != null) {
+                cell = currentState.getCell();
+                /*deg = mxUtils.getDouble(currentState.getStyle(),
 						mxConstants.STYLE_ROTATION);*/
-			}
+            }
 
-			deg += currentAngle * mxConstants.DEG_PER_RAD;
-			boolean willExecute = cell != null && first != null;
+            deg += currentAngle * mxConstants.DEG_PER_RAD;
+            boolean willExecute = cell != null && first != null;
 
-			// TODO: Call reset before execute in all handlers that
-			// offer an execute method
-			reset();
+            // TODO: Call reset before execute in all handlers that
+            // offer an execute method
+            reset();
 
-			if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
-					&& willExecute)
-			{
-				graphComponent.getGraph().setCellStyles(
-						mxConstants.STYLE_ROTATION, String.valueOf(deg),
-						new Object[] { cell });
+            if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
+                    && willExecute) {
+                graphComponent.getGraph().setCellStyles(
+                        mxConstants.STYLE_ROTATION, String.valueOf(deg),
+                        new Object[]{cell});
 
-				graphComponent.getGraphControl().repaint();
+                graphComponent.getGraphControl().repaint();
 
-				e.consume();
-			}
-		}
+                e.consume();
+            }
+        }
 
-		currentState = null;
-	}
+        currentState = null;
+    }
 
-	/**
-	 * 
-	 */
-	public void reset()
-	{
-		if (handle.getParent() != null)
-		{
-			handle.getParent().remove(handle);
-		}
+    /**
+     *
+     */
+    public void reset() {
+        if (handle.getParent() != null) {
+            handle.getParent().remove(handle);
+        }
 
-		mxRectangle dirty = null;
+        mxRectangle dirty = null;
 
-		if (currentState != null && first != null)
-		{
-			dirty = mxUtils.getBoundingBox(currentState, currentAngle
-					* mxConstants.DEG_PER_RAD);
-			dirty.grow(1);
-		}
+        if (currentState != null && first != null) {
+            dirty = mxUtils.getBoundingBox(currentState, currentAngle
+                    * mxConstants.DEG_PER_RAD);
+            dirty.grow(1);
+        }
 
-		currentState = null;
-		currentAngle = 0;
-		first = null;
+        currentState = null;
+        currentAngle = 0;
+        first = null;
 
-		if (dirty != null)
-		{
-			graphComponent.getGraphControl().repaint(dirty.getRectangle());
-		}
-	}
+        if (dirty != null) {
+            graphComponent.getGraphControl().repaint(dirty.getRectangle());
+        }
+    }
 
-	/**
-	 *
-	 */
-	public void paint(Graphics g)
-	{
-		if (currentState != null && first != null)
-		{
-			Rectangle rect = currentState.getRectangle();
-			double deg = currentAngle * mxConstants.DEG_PER_RAD;
+    /**
+     *
+     */
+    public void paint(Graphics g) {
+        if (currentState != null && first != null) {
+            Rectangle rect = currentState.getRectangle();
+            double deg = currentAngle * mxConstants.DEG_PER_RAD;
 
-			if (deg != 0)
-			{
-				((Graphics2D) g).rotate(Math.toRadians(deg),
-						currentState.getCenterX(), currentState.getCenterY());
-			}
+            if (deg != 0) {
+                ((Graphics2D) g).rotate(Math.toRadians(deg),
+                        currentState.getCenterX(), currentState.getCenterY());
+            }
 
-			mxUtils.setAntiAlias((Graphics2D) g, true, false);
-			g.drawRect(rect.x, rect.y, rect.width, rect.height);
-		}
-	}
+            mxUtils.setAntiAlias((Graphics2D) g, true, false);
+            g.drawRect(rect.x, rect.y, rect.width, rect.height);
+        }
+    }
 
 }

@@ -26,94 +26,91 @@ import java.awt.geom.GeneralPath;
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  */
-public class AWTPolylineProducer implements PointsHandler, ShapeProducer
-{
-	/**
-	 * The current path.
-	 */
-	protected GeneralPath path;
+public class AWTPolylineProducer implements PointsHandler, ShapeProducer {
 
-	/**
-	 * Is the current path a new one?
-	 */
-	protected boolean newPath;
+    /**
+     * The current path.
+     */
+    protected GeneralPath path;
 
-	/**
-	 * The winding rule to use to construct the path.
-	 */
-	protected int windingRule;
+    /**
+     * Is the current path a new one?
+     */
+    protected boolean newPath;
 
-	/**
-	 * Utility method for creating an ExtendedGeneralPath.
-	 * @param text The text representation of the path specification.
-	 * @param wr The winding rule to use for creating the path.
-	 */
-	public static Shape createShape(String text, int wr) throws ParseException
-	{
-		AWTPolylineProducer ph = new AWTPolylineProducer();
+    /**
+     * The winding rule to use to construct the path.
+     */
+    protected int windingRule;
 
-		ph.setWindingRule(wr);
-		PointsParser p = new PointsParser(ph);
-		p.parse(text);
+    /**
+     * Utility method for creating an ExtendedGeneralPath.
+     *
+     * @param text The text representation of the path specification.
+     * @param wr The winding rule to use for creating the path.
+     */
+    public static Shape createShape(String text, int wr) throws ParseException {
+        AWTPolylineProducer ph = new AWTPolylineProducer();
 
-		return ph.getShape();
-	}
+        ph.setWindingRule(wr);
+        PointsParser p = new PointsParser(ph);
+        p.parse(text);
 
-	/**
-	 * Sets the winding rule used to construct the path.
-	 */
-	public void setWindingRule(int i)
-	{
-		windingRule = i;
-	}
+        return ph.getShape();
+    }
 
-	/**
-	 * Returns the current winding rule.
-	 */
-	public int getWindingRule()
-	{
-		return windingRule;
-	}
+    /**
+     * Sets the winding rule used to construct the path.
+     */
+    @Override
+    public void setWindingRule(int i) {
+        windingRule = i;
+    }
 
-	/**
-	 * Returns the Shape object initialized during the last parsing.
-	 * @return the shape or null if this handler has not been used by
-	 *         a parser.
-	 */
-	public Shape getShape()
-	{
-		return path;
-	}
+    /**
+     * Returns the current winding rule.
+     */
+    @Override
+    public int getWindingRule() {
+        return windingRule;
+    }
 
-	/**
-	 * Implements {@link PointsHandler#startPoints()}.
-	 */
-	public void startPoints() throws ParseException
-	{
-		path = new GeneralPath(windingRule);
-		newPath = true;
-	}
+    /**
+     * Returns the Shape object initialized during the last parsing.
+     *
+     * @return the shape or null if this handler has not been used by a parser.
+     */
+    @Override
+    public Shape getShape() {
+        return path;
+    }
 
-	/**
-	 * Implements {@link PointsHandler#point(float,float)}.
-	 */
-	public void point(float x, float y) throws ParseException
-	{
-		if (newPath)
-		{
-			newPath = false;
-			path.moveTo(x, y);
-		}
-		else
-		{
-			path.lineTo(x, y);
-		}
-	}
+    /**
+     * Implements {@link PointsHandler#startPoints()}.
+     */
+    @Override
+    public void startPoints() throws ParseException {
+        path = new GeneralPath(windingRule);
+        newPath = true;
+    }
 
-	/**
-	 * Implements {@link PointsHandler#endPoints()}.
-	 */
-	public void endPoints() throws ParseException
-	{
-	}
+    /**
+     * Implements {@link PointsHandler#point(float,float)}.
+     */
+    @Override
+    public void point(float x, float y) throws ParseException {
+        if (newPath) {
+            newPath = false;
+            path.moveTo(x, y);
+        } else {
+            path.lineTo(x, y);
+        }
+    }
+
+    /**
+     * Implements {@link PointsHandler#endPoints()}.
+     */
+    @Override
+    public void endPoints() throws ParseException {
+    }
 }

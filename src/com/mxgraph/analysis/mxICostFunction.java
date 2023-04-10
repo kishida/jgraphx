@@ -12,15 +12,14 @@ import com.mxgraph.view.mxCellState;
  * <code>new mxDistanceCostFunction(graph)</code> or
  * <code>new mxConstantCostFunction(1)</code>.
  */
-public interface mxICostFunction
-{
+public interface mxICostFunction {
 
-	/**
-	 * Evaluates the cost of the given cell state.
-	 * 
-	 * @param state The cell state to be evaluated
-	 * @return Returns the cost to traverse the given cell state.
-	 */
-	double getCost(mxCellState state);
+    /**
+     * Evaluates the cost of the given cell state.
+     *
+     * @param state The cell state to be evaluated
+     * @return Returns the cost to traverse the given cell state.
+     */
+    double getCost(mxCellState state);
 
 }

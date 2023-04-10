@@ -19,15 +19,15 @@
 package com.mxgraph.util.svg;
 
 /**
- * This interface must be implemented and then registred as the error handler
- * in order to be notified of parsing errors. 
+ * This interface must be implemented and then registred as the error handler in
+ * order to be notified of parsing errors.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  */
-public interface ErrorHandler
-{
-	/**
-	 * Called when a parse error occurs.
-	 */
-	void error(ParseException e) throws ParseException;
+public interface ErrorHandler {
+
+    /**
+     * Called when a parse error occurs.
+     */
+    void error(ParseException e) throws ParseException;
 }

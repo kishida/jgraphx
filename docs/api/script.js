@@ -38,50 +38,50 @@ function loadScripts(doc, tag) {
     createElem(doc, tag, 'search.js');
 
     $.get(pathtoroot + "module-search-index.zip")
-            .done(function() {
-                JSZipUtils.getBinaryContent(pathtoroot + "module-search-index.zip", function(e, data) {
-                    JSZip.loadAsync(data).then(function(zip){
-                        zip.file("module-search-index.json").async("text").then(function(content){
+            .done(function () {
+                JSZipUtils.getBinaryContent(pathtoroot + "module-search-index.zip", function (e, data) {
+                    JSZip.loadAsync(data).then(function (zip) {
+                        zip.file("module-search-index.json").async("text").then(function (content) {
                             moduleSearchIndex = JSON.parse(content);
                         });
                     });
                 });
             });
     $.get(pathtoroot + "package-search-index.zip")
-            .done(function() {
-                JSZipUtils.getBinaryContent(pathtoroot + "package-search-index.zip", function(e, data) {
-                    JSZip.loadAsync(data).then(function(zip){
-                        zip.file("package-search-index.json").async("text").then(function(content){
+            .done(function () {
+                JSZipUtils.getBinaryContent(pathtoroot + "package-search-index.zip", function (e, data) {
+                    JSZip.loadAsync(data).then(function (zip) {
+                        zip.file("package-search-index.json").async("text").then(function (content) {
                             packageSearchIndex = JSON.parse(content);
                         });
                     });
                 });
             });
     $.get(pathtoroot + "type-search-index.zip")
-            .done(function() {
-                JSZipUtils.getBinaryContent(pathtoroot + "type-search-index.zip", function(e, data) {
-                    JSZip.loadAsync(data).then(function(zip){
-                        zip.file("type-search-index.json").async("text").then(function(content){
+            .done(function () {
+                JSZipUtils.getBinaryContent(pathtoroot + "type-search-index.zip", function (e, data) {
+                    JSZip.loadAsync(data).then(function (zip) {
+                        zip.file("type-search-index.json").async("text").then(function (content) {
                             typeSearchIndex = JSON.parse(content);
                         });
                     });
                 });
             });
     $.get(pathtoroot + "member-search-index.zip")
-            .done(function() {
-                JSZipUtils.getBinaryContent(pathtoroot + "member-search-index.zip", function(e, data) {
-                    JSZip.loadAsync(data).then(function(zip){
-                        zip.file("member-search-index.json").async("text").then(function(content){
+            .done(function () {
+                JSZipUtils.getBinaryContent(pathtoroot + "member-search-index.zip", function (e, data) {
+                    JSZip.loadAsync(data).then(function (zip) {
+                        zip.file("member-search-index.json").async("text").then(function (content) {
                             memberSearchIndex = JSON.parse(content);
                         });
                     });
                 });
             });
     $.get(pathtoroot + "tag-search-index.zip")
-            .done(function() {
-                JSZipUtils.getBinaryContent(pathtoroot + "tag-search-index.zip", function(e, data) {
-                    JSZip.loadAsync(data).then(function(zip){
-                        zip.file("tag-search-index.json").async("text").then(function(content){
+            .done(function () {
+                JSZipUtils.getBinaryContent(pathtoroot + "tag-search-index.zip", function (e, data) {
+                    JSZip.loadAsync(data).then(function (zip) {
+                        zip.file("tag-search-index.json").async("text").then(function (content) {
                             tagSearchIndex = JSON.parse(content);
                         });
                     });
@@ -102,7 +102,7 @@ function loadScripts(doc, tag) {
     if (!tagSearchIndex) {
         createElem(doc, tag, 'tag-search-index.js');
     }
-    $(window).resize(function() {
+    $(window).resize(function () {
         $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
     });
 }
@@ -118,11 +118,10 @@ function show(type) {
     count = 0;
     for (var key in data) {
         var row = document.getElementById(key);
-        if ((data[key] &  type) !== 0) {
+        if ((data[key] & type) !== 0) {
             row.style.display = '';
             row.className = (count++ % 2) ? rowColor : altColor;
-        }
-        else
+        } else
             row.style.display = 'none';
     }
     updateTabs(type);
@@ -135,10 +134,9 @@ function updateTabs(type) {
         if (value == type) {
             sNode.className = activeTableTab;
             spanNode.innerHTML = tabs[value][1];
-        }
-        else {
+        } else {
             sNode.className = tableTab;
-            spanNode.innerHTML = "<a href=\"javascript:show("+ value + ");\">" + tabs[value][1] + "</a>";
+            spanNode.innerHTML = "<a href=\"javascript:show(" + value + ");\">" + tabs[value][1] + "</a>";
         }
     }
 }
